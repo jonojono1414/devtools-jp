@@ -1,15 +1,36 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 export function AdSidebar() {
-  // AdSense承認後にスクリプトを有効化
+  const pushed = useRef(false);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID) return;
+    if (pushed.current) return;
+    try {
+      ((window as unknown as Record<string, unknown[]>).adsbygoogle =
+        (window as unknown as Record<string, unknown[]>).adsbygoogle || []).push({});
+      pushed.current = true;
+    } catch {
+      // AdSense not loaded
+    }
+  }, []);
+
+  if (!process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID) {
+    return null;
+  }
+
   return (
     <div className="sticky top-24">
-      <div
-        className="flex h-[250px] w-[300px] items-center justify-center rounded-lg bg-gray-50 text-sm text-gray-400 dark:bg-gray-800/50"
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}
         data-ad-slot="sidebar"
-      >
-        {/* 広告スペース - AdSense承認後に有効化 */}
-      </div>
+        data-ad-format="vertical"
+        data-full-width-responsive="false"
+      />
     </div>
   );
 }

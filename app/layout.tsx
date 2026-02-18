@@ -53,6 +53,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${notoSansJP.variable} ${geistMono.variable} flex min-h-screen flex-col bg-white font-sans text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100`}
       >
